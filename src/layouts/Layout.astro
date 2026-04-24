@@ -35,10 +35,12 @@ const siteName = 'kiso9.kr';
 
 <style>
   header {
+    flex-shrink: 0;
     max-width: var(--max-width);
     margin: 0 auto;
     padding: 2.5rem 1.5rem 0;
     text-align: center;
+    width: 100%;
   }
 
   .site-name {
@@ -49,16 +51,22 @@ const siteName = 'kiso9.kr';
   }
 
   main {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     max-width: var(--max-width);
     margin: 0 auto;
     padding: 2rem 1.5rem 4rem;
+    width: 100%;
   }
 
   footer {
+    flex-shrink: 0;
     max-width: var(--max-width);
     margin: 0 auto;
     text-align: right;
     padding: 2rem 1.5rem 3rem;
+    width: 100%;
     color: #aaa;
     font-family: 'MbahLiel', serif;
     font-weight: normal;
