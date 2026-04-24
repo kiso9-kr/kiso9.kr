@@ -1,3 +1,11 @@
+@font-face {
+  font-family: 'MbahLiel';
+  src: url('/fonts/Mbah Liel.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;

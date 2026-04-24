@@ -5,8 +5,7 @@ interface Props {
 }
 
 const { title, description } = Astro.props;
-const siteName = 'kiso9'; // TODO: 이름으로 변경
-const siteUrl = Astro.site;
+const siteName = 'kiso9.kr';
 ---
 
 <!doctype html>
@@ -22,12 +21,15 @@ const siteUrl = Astro.site;
   <body>
     <header>
       <a href="/">
-        <img src="/logo.png" alt={siteName} />
+        <span class="site-name">{siteName}</span>
       </a>
     </header>
     <main>
       <slot />
     </main>
+    <footer>
+      <span>kiso9.kr@gmail.com</span>
+    </footer>
   </body>
 </html>
 
@@ -36,17 +38,30 @@ const siteUrl = Astro.site;
     max-width: var(--max-width);
     margin: 0 auto;
     padding: 2.5rem 1.5rem 0;
+    text-align: center;
   }
 
-  header img {
-    height: 28px;
-    width: auto;
-    display: block;
+  .site-name {
+    font-family: 'MbahLiel', serif;
+    font-weight: normal;
+    font-size: 3rem;
+    letter-spacing: 0.02em;
   }
 
   main {
     max-width: var(--max-width);
     margin: 0 auto;
-    padding: 2rem 1.5rem 6rem;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  footer {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    text-align: right;
+    padding: 2rem 1.5rem 3rem;
+    color: #aaa;
+    font-family: 'MbahLiel', serif;
+    font-weight: normal;
+    font-size: 1.125rem;
   }
 </style>

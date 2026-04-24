@@ -1,0 +1,33 @@
+backend:
+  name: github
+  repo: kiso9-kr/kiso9.kr
+  branch: main
+  base_url: https://YOUR_OAUTH_PROXY_URL
+
+media_folder: public/images
+public_folder: /images
+
+locale: ko
+
+collections:
+  - name: posts
+    label: 포스트
+    label_singular: 포스트
+    folder: src/content/posts
+    create: true
+    extension: md
+    fields:
+      - { label: 제목, name: title, widget: string }
+      - { label: 날짜, name: date, widget: datetime, format: YYYY-MM-DD, date_only: true }
+      - label: 타입
+        name: type
+        widget: select
+        options:
+          - { label: 텍스트, value: text }
+          - { label: 유튜브, value: youtube }
+          - { label: 작업, value: work }
+      - { label: YouTube ID, name: youtube, widget: string, required: false, hint: '영상 URL의 v= 뒤 값 (예: dQw4w9WgXcQ)' }
+      - { label: 이미지, name: image, widget: image, required: false }
+      - { label: 썸네일, name: thumbnail, widget: image, required: false }
+      - { label: 설명, name: description, widget: string, required: false }
+      - { label: 본문, name: body, widget: markdown }
