@@ -2,7 +2,7 @@ backend:
   name: github
   repo: kiso9-kr/kiso9.kr
   branch: main
-  base_url: https://YOUR_OAUTH_PROXY_URL
+  base_url: https://netlify-cms-github-oauth-provider-o01w.onrender.com
 
 media_folder: public/images
 public_folder: /images
