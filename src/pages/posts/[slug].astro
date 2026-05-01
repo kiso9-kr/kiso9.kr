@@ -34,7 +34,7 @@ function formatDate(date: Date) {
     {gallery && gallery.length > 0 && (
       <div class:list={['gallery-wrap', { 'gallery-half': galleryHalf }]}>
         <div class="gallery-track" id="gallery-track">
-          {gallery.map((src, i) => (
+          {gallery.map((src: string, i: number) => (
             <div class="gallery-slide">
               <img src={encodeURI(src)} alt={`${title} ${i + 1}`} loading="lazy" />
             </div>
@@ -43,7 +43,7 @@ function formatDate(date: Date) {
         <button class="gallery-btn gallery-prev" id="gallery-prev" aria-label="이전">&#8592;</button>
         <button class="gallery-btn gallery-next" id="gallery-next" aria-label="다음">&#8594;</button>
         <div class="gallery-dots" id="gallery-dots">
-          {gallery.map((_, i) => (
+          {gallery.map((_: string, i: number) => (
             <button class:list={['gallery-dot', { active: i === 0 }]} data-index={i} aria-label={`${i + 1}번 이미지`} />
           ))}
         </div>
@@ -246,7 +246,7 @@ function formatDate(date: Date) {
   }
 
   .gallery-half {
-    max-width: 50%;
+    max-width: 66.67%;
     margin-left: auto;
     margin-right: auto;
   }
@@ -349,5 +349,11 @@ function formatDate(date: Date) {
 
   article.center-layout .content :global(p) {
     white-space: pre-line;
+  }
+
+  @media (max-width: 640px) {
+    article.center-layout .post-thumbnail img {
+      width: 66.67% !important;
+    }
   }
 </style>

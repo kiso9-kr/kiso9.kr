@@ -1,6 +1,6 @@
 ---
 title: "Community Chest : Live Coding Music Edition"
-date: 2026-04-30
+date: 2026-03-15
 type: "youtube"
 section: "live-coding"
 youtube: "rqedpZ1ImBo"
