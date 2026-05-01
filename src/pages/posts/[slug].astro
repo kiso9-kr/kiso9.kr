@@ -98,7 +98,16 @@ function formatDate(date: Date) {
       const total = dots.length;
       let current = 0;
 
-      track.scrollLeft = 0;
+      function resetToFirst() {
+        requestAnimationFrame(() => {
+          track.scrollLeft = 0;
+          current = 0;
+          dots.forEach((d, i) => d.classList.toggle('active', i === 0));
+        });
+      }
+
+      resetToFirst();
+      window.addEventListener('pageshow', resetToFirst);
 
       function goTo(index) {
         current = Math.max(0, Math.min(index, total - 1));
