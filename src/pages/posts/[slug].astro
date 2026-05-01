@@ -98,6 +98,8 @@ function formatDate(date: Date) {
       const total = dots.length;
       let current = 0;
 
+      track.scrollLeft = 0;
+
       function goTo(index) {
         current = Math.max(0, Math.min(index, total - 1));
         track.scrollTo({ left: current * track.offsetWidth, behavior: 'smooth' });
