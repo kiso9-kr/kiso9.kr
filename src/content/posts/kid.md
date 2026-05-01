@@ -1,0 +1,90 @@
+---
+title: "kid"
+date: 2026-04-30
+type: "strudel"
+section: "live-coding"
+thumbnail: "/live_coding/kid/kid.jpg"
+code: |
+  setCpm(130/4).log()
+
+  let pad1 = s("gm_pad_warm")
+    .gain(0.10)
+    .lpf(300)
+    // .vowel("[o [i o] u]*2?, <e o u i>(3,8)")
+    .vowel("<o i o u> [a|e|i|o|u]")
+    .room(0.9).size(0.9)
+    .delay(0.8).delayfeedback(0.5)
+    .sometimes(x => x.add(7))
+    .rarely(x => x.ply(2))
+    ._spiral({ steady: .96 }).log()
+
+  let lead1 =
+    note("c2 [c3*2] ~ f2 g2 ~ [Bb2 c3] ~")
+    // note("c2 [c2 eb2] ~ f2 [g2 f2] ~ c2 ~")
+    // note("<[0 0 12 0] [0 7 0 10] [0 0 12 3] [0 5 0 7]>").decay(0.15) //gone bd
+    .s("sawtooth").adsr("0:0.1:0.05:1")
+    .lpf(rand.range(400, slider(400, 400, 900, 10)).slow(64))
+    .lpq(rand.range(10, 30).slow(64))
+    .sometimes(x => x.add(12))
+    .room(slider(0.2,0.2,0.9,0.1)).size(0.9)
+    .pan(0.6)
+    .jux(rev)
+    ._scope().log()
+
+  $_HELLO_this_is_the_first_song_KID: arrange(
+    [16, lead1.gain(saw.slow(16).range(0, 0.4))],
+    [100000, lead1.gain(0.4)]
+  )
+  $:pad1
+
+  // $bd1: s("circuitsdrumtracks_bd*4").lpf(1500).gain(0.4)._scope()
+
+  let hh11 =
+    s("akaimpc60_hh:1").gain(0.2).room(0.1).pan(0.5).color('#FDE4E7').log()
+    .struct("[1*4] [1*2] [~ 1] [1*2]")
+    // .struct(binaryN(55658, 16))
+  let oh11 =
+    s("xdrumlm8953_hh")
+    .struct("1 [~ 1] 0 [~ 1]")
+    .room(0.3).gain(0.15).pan(0.9).color('#F9A1AE').log()
+  let oh12 =
+    s("xdrumlm8953_hh")
+    .struct("1 [1*4] [~ 1] [ 1*2]")
+    .room(0.4).gain(0.1).pan(0.1).color('#F63A73').log()
+  let fh1 =
+    s(" rolandcompurhythm8000_hh*16")
+    .struct("1? 1 1 1 1? 1 1 1 1? 1 1 1 1? 1 1 1")
+    .room(0.6).size(0.9)
+    .lpf(7000).pan(0.3).gain(0.1).color('#DA064C').log()
+
+  $hh1: stack( //gone oh->r23
+
+  )._punchcard({stroke: true})
+
+
+
+  _$cp1: stack(
+    s("rolandcompurhythm1000_cp").gain(0.15).pan(0.3).room(0.1).log()
+    .struct(binaryN(5,4))
+    // .sometimes(x => x.ply(2)),
+    // .struct(binaryN(12298, 16)),
+  )._punchcard().color('#D0D006')
+
+  let rim11 =
+    s("alesishr16_rim:0(3,8,2)").gain(0.2).pan(0.2).log()
+  let rim12 =
+    s("alesishr16_rim").gain(0.2).pan(0.2).log()
+    .struct("~ ~ x x x ~ ~ ~ x ~ ~ ~ ~ ~ ~ ~")
+  let rim13 =
+    s("circuitsdrumtracks_rim")
+    .hpf(800).decay(0.05).shape(0.5).pan(0.8).gain(0.15).log()
+    .struct("x ~ ~ ~ ~ ~ x ~ ~ ~ x ~ x ~ x ~")
+
+  $rim1: stack( //gone->cp
+
+  )._punchcard().color('brown').markcss('border: 2px solid white; box-shadow: 0 0 10px #67573f;')
+---
+
+서울 The Edge, &lt;ILLEGAL BEATZ&gt; 공연을 위해 제작한 7분 분량의 트랙입니다.
+
+Produced for &lt;ILLEGAL BEATZ&gt; at The Edge, Seoul. (Running time: 7:00)

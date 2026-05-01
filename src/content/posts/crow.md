@@ -1,0 +1,95 @@
+---
+title: "crow"
+date: 2026-04-30
+type: "strudel"
+section: "live-coding"
+thumbnail: "/live_coding/crow/crow.jpg"
+code: |
+  let animal3 = s("crow:2")
+    .speed(wchoose(["-1",2],["1",1],["0.25",5],["2",1]))
+    .struct("[1? 1? ~ ~] [~ 1? ~ 1?]")
+    .begin(choose(.1,.2,.3,.4)).end(choose(.6,.7,.8,.9))
+    .room(0.5).delay(0.3)
+    .pan(wchoose([".4",7],[".6",6],[".3",1],[".7",2]))
+    .gain(0.5)
+    ._spectrum()  .log()
+
+
+  let pad3 = note("0 7 10 14").scale("minor").s("sine")
+    .gain(0.3).slow(4).pan(sine)._scope().log()
+
+  let shaker3 = sound("shaker_small:1*16")
+    .pan(".7 .8 .7 .9")._scope().log()
+
+  _$ending_TAMB: stack(
+    lead22.gain(saw.slow(32).range(0.4, 0)).delay(saw.slow(32).range(0.2, 1)).lpf(saw.slow(32).range(3000, 100)),
+    animal3.gain(saw.slow(32).range(0, 0.5)),
+    pad3.gain(saw.slow(32).range(0, 0.3)),
+  )
+
+  let bass3 = s(" gm_synth_bass_2:2").speed("1 -1 0.5 1.5")
+    .room(0.4).delay(0.25)
+    .struct("[1? ~ 1 ~] [~ 1? ~ 1]")
+    .gain(slider(0,0,0.5))
+    ._spectrum().log()
+
+  _$this_is_the_third_song_CROW: stack(
+    pad3, animal3, shaker3, bass3
+  )
+
+  _$noise3: s("white").gain(0.08).hpf(7000).slow(10)
+    .room(0.8).sometimes(x => x.degradeBy(0.4)).pan(0.6)._scope().log()
+
+  _$notes3: note("c4 eb4 g4 bb4").s("gm_percussive_organ")
+    .slow(6).lpf(600)
+    .room(0.9).size(0.95).gain(slider(0.3654,0,0.6))
+    .pan(0.4)._punchcard({ labels: 1, stroke:1 }) .color('#f96ee8').log()
+
+  _$arp3: note("c5 eb5 g5 bb5").fast(2).s("triangle")
+    .gain(0.25).lpf(1400).room(0.6).delay(0.15)
+    .pan(0.3)._punchcard({ labels: 1, stroke:1}).color('#09f7f7').log()
+
+
+  //1->2-1->2-2->a+1/2->3->.3+2-1
+  $synth3: stack(
+  // note("0 2 3 7 ~ 10 7 3").color('#faf5c4')
+  // .scale("minor").s("gm_fx_brightness")
+  // .lpf("800 1200 400 2000 600 1500").resonance("7 9 15 25")
+  // // .struct("1 [~ 1?] 1 ~ [1? ~]")
+  // .slow(2),
+
+  // note("0 0 3 0 ~ 0 0 0").color('#feef06')
+  // // note("0 2 4 7 ~ 9 7 4").color('#a2bf07')
+  // .scale("dorian").s("gm_fx_brightness")
+  // .lpf("400 800 1200 600").resonance(10)
+  // .slow(2),
+
+  // note("g4 bb4 c5 eb5 g5 eb5 c5 bb4").color('#f5eb61')
+  // .s("sawtooth").lpf(1500).resonance(0.5).legato(1.1)
+  // .delay(0.2).room(0.5).sometimes(x => x.add(12)),
+  ).gain(0.5)._pianoroll({ labels: 1, stroke:1})
+
+  let bd3 =
+    s("bd:4").gain(0.4).color('#d4069a').log()
+    .struct("1 ~ ~ 1 ~ 1 ~ ~")
+    // .struct("1 ~ 1 ~ 1 ~ 1 ~")
+
+  let sd3 =
+    s("sd:2").color('#e06db9').log()
+    .lpf(2500).delay(0.02).gain(0.4).pan(0.3)
+    .struct("~ 1 ~ 1")
+    // .struct("~ ~ 1 ~ ~ 1 ~ ~")
+
+  let hh3 =
+    s("hh*8").gain(0.5).pan(0.7).color('#f7e4ee').log()
+    .struct("[1? 1 1? 1] [~ 1 1? ~]").speed("1 1.2 0.9 1.1")
+    // .struct("[1 ~ 1? ~] [~ 1 ~ 1?]").speed("1 0.8 1.2 0.9")
+
+  $drum3: stack(
+
+  )._punchcard({ labels: 1, stroke:1})
+---
+
+서울 The Edge, &lt;ILLEGAL BEATZ&gt; 공연을 위해 제작한 7분 분량의 트랙입니다.
+
+Produced for &lt;ILLEGAL BEATZ&gt; at The Edge, Seoul. (Running time: 7:00)

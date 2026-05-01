@@ -13,7 +13,7 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { Content } = await post.render();
 
-const { title, date, type, youtube, image, description } = post.data;
+const { title, date, type, youtube, image, description, code, thumbnail, hideDate, hideTitle, centerAlign, gallery, galleryHalf, thumbnailWidth } = post.data;
 
 function formatDate(date: Date) {
   return date.toLocaleDateString('ko-KR', {
@@ -25,18 +25,43 @@ function formatDate(date: Date) {
 ---
 
 <Layout title={title} description={description}>
-  <article>
+  <article class:list={[{ 'center-layout': centerAlign }]}>
     <header>
-      <h1>{title}</h1>
-      <time datetime={date.toISOString()}>{formatDate(date)}</time>
+      {!hideTitle && <h1>{title}</h1>}
+      {!hideDate && <time datetime={date.toISOString()}>{formatDate(date)}</time>}
     </header>
+
+    {gallery && gallery.length > 0 && (
+      <div class:list={['gallery-wrap', { 'gallery-half': galleryHalf }]}>
+        <div class="gallery-track" id="gallery-track">
+          {gallery.map((src, i) => (
+            <div class="gallery-slide">
+              <img src={encodeURI(src)} alt={`${title} ${i + 1}`} loading="lazy" />
+            </div>
+          ))}
+        </div>
+        <button class="gallery-btn gallery-prev" id="gallery-prev" aria-label="이전">&#8592;</button>
+        <button class="gallery-btn gallery-next" id="gallery-next" aria-label="다음">&#8594;</button>
+        <div class="gallery-dots" id="gallery-dots">
+          {gallery.map((_, i) => (
+            <button class:list={['gallery-dot', { active: i === 0 }]} data-index={i} aria-label={`${i + 1}번 이미지`} />
+          ))}
+        </div>
+      </div>
+    )}
+
+    {!gallery && type === 'text' && thumbnail && (
+      <div class="post-thumbnail">
+        <img src={encodeURI(thumbnail)} alt={title} style={thumbnailWidth ? `width:${thumbnailWidth}` : undefined} />
+      </div>
+    )}
 
     {type === 'youtube' && youtube && (
       <div class="embed">
         <iframe
           src={`https://www.youtube.com/embed/${youtube}`}
           title={title}
-          frameborder="0"
+          style="border:0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowfullscreen
         />
@@ -49,6 +74,12 @@ function formatDate(date: Date) {
       </div>
     )}
 
+    {type === 'strudel' && code && (
+      <div class="strudel-embed">
+        <div id="strudel-container" class="strudel-loading">로딩 중…</div>
+      </div>
+    )}
+
     <div class="content">
       <Content />
     </div>
@@ -58,6 +89,52 @@ function formatDate(date: Date) {
     <a href="/">← prev</a>
   </nav>
 </Layout>
+
+{gallery && gallery.length > 0 && (
+  <script is:inline>
+    (function () {
+      const track = document.getElementById('gallery-track');
+      const dots = document.querySelectorAll('.gallery-dot');
+      const total = dots.length;
+      let current = 0;
+
+      function goTo(index) {
+        current = Math.max(0, Math.min(index, total - 1));
+        track.scrollTo({ left: current * track.offsetWidth, behavior: 'smooth' });
+        dots.forEach((d, i) => d.classList.toggle('active', i === current));
+      }
+
+      document.getElementById('gallery-prev').addEventListener('click', () => goTo(current - 1));
+      document.getElementById('gallery-next').addEventListener('click', () => goTo(current + 1));
+      dots.forEach((dot) => dot.addEventListener('click', () => goTo(Number(dot.dataset.index))));
+
+      track.addEventListener('scroll', () => {
+        const index = Math.round(track.scrollLeft / track.offsetWidth);
+        if (index !== current) {
+          current = index;
+          dots.forEach((d, i) => d.classList.toggle('active', i === current));
+        }
+      }, { passive: true });
+    })();
+  </script>
+)}
+
+{type === 'strudel' && code && (
+  <script is:inline define:vars={{ strudelCode: code }}>
+    (function () {
+      const container = document.getElementById('strudel-container');
+
+      const bytes = new TextEncoder().encode(strudelCode);
+      const binary = Array.from(bytes, b => String.fromCharCode(b)).join('');
+      const encoded = encodeURIComponent(btoa(binary));
+      const iframe = document.createElement('iframe');
+      iframe.src = 'https://strudel.cc/#' + encoded;
+      iframe.allow = 'autoplay; microphone';
+      iframe.style.cssText = 'width:100%;height:300px;border:0;display:block;';
+      container.replaceWith(iframe);
+    })();
+  </script>
+)}
 
 <style>
   article header {
@@ -142,5 +219,135 @@ function formatDate(date: Date) {
     border-top: 1px solid var(--color-border);
     font-size: 0.85rem;
     color: var(--color-muted);
+  }
+
+  .strudel-embed {
+    margin-bottom: 2rem;
+  }
+
+  .strudel-loading {
+    font-size: 0.82rem;
+    color: var(--color-muted);
+    padding: 0.5rem 0;
+  }
+
+  .post-thumbnail {
+    margin-bottom: 2rem;
+  }
+
+  .post-thumbnail img {
+    width: 100%;
+  }
+
+  .gallery-wrap {
+    position: relative;
+    margin-bottom: 2rem;
+    user-select: none;
+  }
+
+  .gallery-half {
+    max-width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .gallery-track {
+    display: flex;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .gallery-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .gallery-slide {
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+  }
+
+  .gallery-slide img {
+    max-width: 100%;
+    max-height: 70vh;
+    width: auto;
+    height: auto;
+    display: block;
+    object-fit: contain;
+  }
+
+  .gallery-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.35);
+    color: #fff;
+    border: none;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 0.9rem;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+  }
+
+  .gallery-btn:hover {
+    background: rgba(0, 0, 0, 0.6);
+  }
+
+  .gallery-prev { left: 0.5rem; }
+  .gallery-next { right: 0.5rem; }
+
+  .gallery-dots {
+    display: flex;
+    justify-content: center;
+    gap: 0.4rem;
+    margin-top: 0.6rem;
+  }
+
+  .gallery-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    border: none;
+    background: #ccc;
+    cursor: pointer;
+    padding: 0;
+    transition: background 0.2s;
+  }
+
+  .gallery-dot.active {
+    background: #333;
+  }
+
+  article.center-layout header {
+    text-align: center;
+  }
+
+  article.center-layout .post-thumbnail {
+    display: flex;
+    justify-content: center;
+  }
+
+  article.center-layout .post-thumbnail img {
+    width: 50%;
+  }
+
+  article.center-layout .content {
+    text-align: center;
+  }
+
+  article.center-layout .content :global(p) {
+    white-space: pre-line;
   }
 </style>
