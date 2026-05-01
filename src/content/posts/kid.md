@@ -37,7 +37,7 @@ code: |
   )
   $:pad1
 
-  // $bd1: s("circuitsdrumtracks_bd*4").lpf(1500).gain(0.4)._scope()
+  $bd1: s("circuitsdrumtracks_bd*4").lpf(1500).gain(0.4)._scope()
 
   let hh11 =
     s("akaimpc60_hh:1").gain(0.2).room(0.1).pan(0.5).color('#FDE4E7').log()

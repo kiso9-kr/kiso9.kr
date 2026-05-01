@@ -21,19 +21,13 @@ code: |
   let shaker3 = sound("shaker_small:1*16")
     .pan(".7 .8 .7 .9")._scope().log()
 
-  _$ending_TAMB: stack(
-    lead22.gain(saw.slow(32).range(0.4, 0)).delay(saw.slow(32).range(0.2, 1)).lpf(saw.slow(32).range(3000, 100)),
-    animal3.gain(saw.slow(32).range(0, 0.5)),
-    pad3.gain(saw.slow(32).range(0, 0.3)),
-  )
-
   let bass3 = s(" gm_synth_bass_2:2").speed("1 -1 0.5 1.5")
     .room(0.4).delay(0.25)
     .struct("[1? ~ 1 ~] [~ 1? ~ 1]")
-    .gain(slider(0,0,0.5))
+    .gain(slider(0.3,0,0.5))
     ._spectrum().log()
 
-  _$this_is_the_third_song_CROW: stack(
+  $this_is_the_third_song_CROW: stack(
     pad3, animal3, shaker3, bass3
   )
 
