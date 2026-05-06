@@ -18,4 +18,4 @@ thumbnailWidth: "60%"
 
 <p style="font-weight:700; color:#999;">1화 - 나도 모르는 나, 무의식</p>
 
-[YouTube](#) · [팟빵](#) · [Apple Podcast](#) · [Spotify](#)
+[팟빵](https://www.podbbang.com/channels/1794579/?ucode=K-CvbfVwlB) · [Spotify](https://open.spotify.com/show/75fm5Iw0pU1K2MZOtmmdFd?si=RyHcQpL9SUKQTGKYEDAVoA)
