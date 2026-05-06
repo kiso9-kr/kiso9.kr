@@ -16,6 +16,6 @@ thumbnailWidth: "60%"
 그래프 인공신경망 박사과정 바다가 
 과학과 예술을 한 스푼 섞어 이야기합니다.
 
-<p style="font-weight:700; color:#999;">5월 6일 수요일 1화 공개 예정</p>
+<p style="font-weight:700; color:#999;">1화 - 나도 모르는 나, 무의식</p>
 
 [YouTube](#) · [팟빵](#) · [Apple Podcast](#) · [Spotify](#)

@@ -40,6 +40,10 @@ function getThumbnail(post: (typeof posts)[number]) {
       );
     })}
   </ul>
+  <div class="platform-links">
+    <a href="https://open.spotify.com/show/75fm5Iw0pU1K2MZOtmmdFd?si=RyHcQpL9SUKQTGKYEDAVoA" target="_blank" rel="noopener noreferrer">Spotify</a>
+    <a href="https://www.podbbang.com/channels/1794579/?ucode=K-CvbfVwlB" target="_blank" rel="noopener noreferrer">팟빵</a>
+  </div>
 </Layout>
 
 <style>
@@ -111,5 +115,25 @@ function getThumbnail(post: (typeof posts)[number]) {
     line-height: 1.4;
     text-align: center;
     text-decoration: none;
+  }
+
+  .platform-links {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .platform-links a {
+    font-size: 0.8rem;
+    color: #999;
+    text-decoration: none;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 1px;
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .platform-links a:hover {
+    color: #111;
+    border-color: #111;
   }
 </style>
